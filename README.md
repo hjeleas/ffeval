@@ -73,43 +73,57 @@ Offset 0 length 1024 structure '%16c'
 On the Platform: 
  "Windows 7, x64 64 bit Core-i3 Intel processor + VS.NET 2015 compile target to "86"
  
-The .spc (SPCHDR header) below  translates to:
- %c%c%c%c%u%lf%lf%u%c%c%c%c%u%9c%9c%hu%8f%130c%30c%u%u%c%c%hu%f%48c%f%u%f%c%187c    
+The .spc (old style OSPC header) below  translates to:
+ "%c%c%hi%f%f%f%c%c%hi%hhi%hhi%hhi%hhi%8c%d%d%7f%130c%30c%32c""
+
+OUTPUT
+======
+# ffeval v0.2 - Evaluate file format headers for long-term preservation for validation on this on this platform
+# File: \prj\DOERNER_40842_Naphtholgelb-S_785nm_1200T_500H_100S_100x_10perc_12sec_4Acc_02_Bearb_03.spc
+Offset 0 length 1024 structure '%c%c%hi%f%f%f%c%c%hi%hhi%hhi%hhi%hhi%8c%d%d%7f%130c%30c%32c'
+00000000 field 000 sz    1/01 format %c bytes 00  value .
+00000001 field 001 sz    1/01 format %c bytes 4d  value M
+00000002 field 002 sz    2/02 format %hi bytes 0f 00  value 15
+00000004 field 003 sz    4/04 format %f bytes 00 40 c8 44  value 1602.000000
+00000008 field 004 sz    4/04 format %f bytes 00 00 c8 42  value 100.000000
+00000012 field 005 sz    4/04 format %f bytes 00 00 e1 44  value 1800.000000
+00000016 field 006 sz    1/01 format %c bytes 0d  value .
+00000017 field 007 sz    1/01 format %c bytes 00  value .
+00000018 field 008 sz    2/02 format %hi bytes 71 00  value 113
+00000020 field 009 sz    1/01 format %hhi bytes 05  value 5
+00000021 field 010 sz    1/01 format %hhi bytes 18  value 24
+00000022 field 011 sz    1/01 format %hhi bytes 0a  value 10
+00000023 field 012 sz    1/01 format %hhi bytes 20  value 32
+00000024 field 013 sz    8/01 format %8c bytes 00 00 00 00 00 00 00 00  value ........
+00000032 field 014 sz    4/04 format %d bytes 00 00 00 00  value 0
+00000036 field 015 sz    4/04 format %d bytes 00 00 00 00  value 0
+00000040 field 016 sz   28/04 format %7f bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value .......
+00000068 field 017 sz  130/01 format %130c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ... value ....................................................................................................
+00000198 field 018 sz   30/01 format %30c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value ..............................
+00000228 field 019 sz   32/01 format %32c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value ................................
+
 
   
 typedef struct
    {
-   BYTE   ftflgs;	/* Flag bits defined below */
-   BYTE   fversn;	/* 0x4B=> new LSB 1st, 0x4C=> new MSB 1st, 0x4D=> old format */
-   BYTE   fexper;	/* Instrument technique code (see below) */
-   char   fexp; 	/* Fraction scaling exponent integer (80h=>float) */
-   DWORD  fnpts;	/* Integer number of points (or TXYXYS directory position) */
-   double ffirst;	/* Floating X coordinate of first point */
-   double flast;	/* Floating X coordinate of last point */
-   DWORD  fnsub;	/* Integer number of subfiles (1 if not TMULTI) */
-   BYTE   fxtype;	/* Type of X axis units (see definitions below) */
-   BYTE   fytype;	/* Type of Y axis units (see definitions below) */
-   BYTE   fztype;	/* Type of Z axis units (see definitions below) */
-   BYTE   fpost;	/* Posting disposition (see GRAMSDDE.H) */
-   DWORD  fdate;	/* Date/Time LSB: min=6b,hour=5b,day=5b,month=4b,year=12b */
-   char   fres[9];	/* Resolution description text (null terminated) */
-   char   fsource[9];	/* Source instrument description text (null terminated) */
-   WORD   fpeakpt;	/* Peak point number for interferograms (0=not known) */
-   float  fspare[8];	/* Used for Array Basic storage */
-   char   fcmnt[130];	/* Null terminated comment ASCII text string */
-   char   fcatxt[30];	/* X,Y,Z axis label strings if ftflgs=TALABS */
-   DWORD  flogoff;	/* File offset to log block or 0 (see above) */
-   DWORD  fmods;	/* File Modification Flags (see below: 1=A,2=B,4=C,8=D..) */
-   BYTE   fprocs;	/* Processing code (see GRAMSDDE.H) */
-   BYTE   flevel;	/* Calibration level plus one (1 = not calibration data) */
-   WORD   fsampin;	/* Sub-method sample injection number (1 = first or only ) */
-   float  ffactor;	/* Floating data multiplier concentration factor (IEEE-32) */
-   char   fmethod[48];	/* Method/program/data filename w/extensions comma list */
-   float  fzinc;	/* Z subfile increment (0 = use 1st subnext-subfirst) */
-   DWORD  fwplanes;	/* Number of planes for 4D with W dimension (0=normal) */
-   float  fwinc;	/* W plane increment (only if fwplanes is not 0) */
-   BYTE   fwtype;	/* Type of W axis units (see definitions below) */
-   char   freserv[187]; /* Reserved (must be set to zero) */
-   } SPCHDR;
-
-  
+   BYTE  oftflgs;
+   BYTE  oversn;	/* 0x4D rather than 0x4C or 0x4B */
+   short oexp;		/* Word rather than byte */
+   float onpts; 	/* Floating number of points */
+   float ofirst;	/* Floating X coordinate of first pnt (SP rather than DP) */
+   float olast; 	/* Floating X coordinate of last point (SP rather than DP) */
+   BYTE  oxtype;	/* Type of X units */
+   BYTE  oytype;	/* Type of Y units */
+   WORD  oyear; 	/* Year collected (0=no date/time) - MSB 4 bits are Z type */
+   BYTE  omonth;	/* Month collected (1=Jan) */
+   BYTE  oday;		/* Day of month (1=1st) */
+   BYTE  ohour; 	/* Hour of day (13=1PM) */
+   BYTE  ominute;	/* Minute of hour */
+   char  ores[8];	/* Resolution text (null terminated unless 8 bytes used) */
+   WORD  opeakpt;
+   WORD  onscans;
+   float ospare[7];
+   char  ocmnt[130];
+   char  ocatxt[30];
+   char  osubh1[32];	/* Header for first (or main) subfile included in main header */
+   } OSPCHDR
