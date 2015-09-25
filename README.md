@@ -70,9 +70,6 @@ Offset 0 length 1024 structure '%16c'
   %lf   : double
   %Lf   : long double
   
-On the Platform: 
- "Windows 7, x64 64 bit Core-i3 Intel processor + VS.NET 2015 compile target to "86"
- 
 The .spc (old style OSPC header) below  translates to:
  "%c%c%hi%f%f%f%c%c%hi%hhi%hhi%hhi%hhi%8c%d%d%7f%130c%30c%32c""
 
@@ -94,15 +91,7 @@ Offset 0 length 1024 structure '%c%c%hi%f%f%f%c%c%hi%hhi%hhi%hhi%hhi%8c%d%d%7f%1
 00000021 field 010 sz    1/01 format %hhi bytes 18  value 24
 00000022 field 011 sz    1/01 format %hhi bytes 0a  value 10
 00000023 field 012 sz    1/01 format %hhi bytes 20  value 32
-00000024 field 013 sz    8/01 format %8c bytes 00 00 00 00 00 00 00 00  value ........
-00000032 field 014 sz    4/04 format %d bytes 00 00 00 00  value 0
-00000036 field 015 sz    4/04 format %d bytes 00 00 00 00  value 0
-00000040 field 016 sz   28/04 format %7f bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value .......
-00000068 field 017 sz  130/01 format %130c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ... value ....................................................................................................
-00000198 field 018 sz   30/01 format %30c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value ..............................
-00000228 field 019 sz   32/01 format %32c bytes 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  value ................................
-
-
+...
   
 typedef struct
    {
